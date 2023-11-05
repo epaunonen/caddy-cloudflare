@@ -33,4 +33,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: epaunonen/caddy-cloudflare:$CURRENT_TAG
+          tags: epaunonen/caddy-cloudflare:${{ env.CURRENT_TAG }}
