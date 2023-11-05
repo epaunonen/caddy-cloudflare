@@ -5,6 +5,18 @@ on:
     branches: ["main"]
 
 jobs:
+  get_current_tag:
+    name: Get current caddy tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      - name: Set tag as an env var
+        run: |
+          ver="$(grep -m2 caddy: Dockerfile | cut -d:@ -f2)"
+          echo "CURRENT_TAG={ver}" >> "$GITHUB_ENV"
+
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -18,18 +30,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-      #   with:
-      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      
       - name: Build and push Docker image
         uses: docker/build-push-action@fdf7f43ecf7c1a5c7afe936410233728a8c2d9c2
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: epaunonen/caddy-cloudflare:latest
-          #tags: ${{ steps.meta.outputs.tags }}
-          #labels: ${{ steps.meta.outputs.labels }}
+          tags: epaunonen/caddy-cloudflare:$CURRENT_TAG
