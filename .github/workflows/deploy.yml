@@ -17,7 +17,7 @@ jobs:
           ver="$(grep -m2 caddy: Dockerfile | cut -d: -f2)"
           tag="$(cut -d@ -f1 <<<"$ver")"
           echo "CURRENT_TAG={ver}" >> "$GITHUB_ENV"
-          echo "$CURRENT_TAG"
+          printf '%s\n' "$CURRENT_TAG"
 
   # push_to_registry:
   #   name: Push Docker image to Docker Hub
