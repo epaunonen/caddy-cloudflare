@@ -14,26 +14,27 @@ jobs:
       
       - name: Set tag as an env var
         run: |
-          ver="$(grep -m2 caddy: Dockerfile | cut -d:@ -f2)"
+          ver="$(grep -m2 caddy: Dockerfile | cut -d: -f2)"
+          tag="$(cut -d@ -f1 <<<"$ver")"
           echo "CURRENT_TAG={ver}" >> "$GITHUB_ENV"
 
-  push_to_registry:
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
+  # push_to_registry:
+  #   name: Push Docker image to Docker Hub
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v4
       
-      - name: Log in to Docker Hub
-        uses: docker/login-action@1f401f745bf57e30b3a2800ad308a87d2ebdf14b
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Log in to Docker Hub
+  #       uses: docker/login-action@1f401f745bf57e30b3a2800ad308a87d2ebdf14b
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Build and push Docker image
-        uses: docker/build-push-action@fdf7f43ecf7c1a5c7afe936410233728a8c2d9c2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: epaunonen/caddy-cloudflare:$CURRENT_TAG
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@fdf7f43ecf7c1a5c7afe936410233728a8c2d9c2
+  #       with:
+  #         context: .
+  #         file: ./Dockerfile
+  #         push: true
+  #         tags: epaunonen/caddy-cloudflare:$CURRENT_TAG
