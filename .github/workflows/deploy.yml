@@ -16,7 +16,7 @@ jobs:
         run: |
           ver="$(grep -m2 caddy: Dockerfile | cut -d: -f2)"
           tag="$(cut -d@ -f1 <<< "$ver")"
-          echo "CURRENT_TAG=$tag" >> "$GITHUB_ENV"
+          echo "CURRENT_TAG="$tag"" >> "$GITHUB_ENV"
 
       - name: Test
         run: echo $CURRENT_TAG
