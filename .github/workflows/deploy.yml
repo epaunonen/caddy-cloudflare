@@ -12,13 +12,13 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Set tag as an env var
+      - name: Set current caddy tag as an env var
         run: |
-          ver="$(grep -m2 caddy: Dockerfile | cut -d: -f2)"
+          ver="$(grep -m2 caddy: Dockerfile | tail -n1 | cut -d: -f2)"
           tag="$(cut -d@ -f1 <<< "$ver")"
           echo "CURRENT_TAG="$tag"" >> "$GITHUB_ENV"
 
-      - name: Test
+      - name: Test tag extraction
         run: echo $CURRENT_TAG
 
       - name: Log in to Docker Hub
