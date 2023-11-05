@@ -12,11 +12,10 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Set current caddy tag as an env var
+      - name: Set current caddy tag from Dockerfile
         run: |
-          ver="$(grep -m2 caddy: Dockerfile | tail -n1 | cut -d: -f2)"
-          tag="$(cut -d@ -f1 <<< "$ver")"
-          echo "CURRENT_TAG="$tag"" >> "$GITHUB_ENV"
+          ver="$(grep -m2 caddy: Dockerfile | tail -n1 | cut -d: -f2 | cut -d@ -f1)"
+          echo "CURRENT_TAG="$ver"" >> "$GITHUB_ENV"
 
       - name: Test tag extraction
         run: echo $CURRENT_TAG
@@ -33,4 +32,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: epaunonen/caddy-cloudflare:${{ env.CURRENT_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/caddy-cloudflare:${{ env.CURRENT_TAG }}, ${{ secrets.DOCKERHUB_USERNAME }}/caddy-cloudflare:latest
