@@ -1,4 +1,4 @@
-FROM caddy:2.7.6-builder@sha256:52b96e26a80a1694b7195f1be152643f7a27b85d1b809e38f7b4d2def10a03a1 AS builder
+FROM caddy:2.7.6-builder@sha256:fbb715163e8d79484b0b40ed1c36035efc029153bfd104559bd4ba90a5451ea1 AS builder
 
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
