@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and push Docker image
-        uses: docker/build-push-action@7e6f77677b7892794c8852c6e3773c3e9bc3129a
+        uses: docker/build-push-action@d56be63626bb5e82c99cad1447925514bdcb4a17
         with:
           context: .
           file: ./Dockerfile
