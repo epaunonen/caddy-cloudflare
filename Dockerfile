@@ -1,8 +1,8 @@
-FROM caddy:2.8.0-builder@sha256:f3dca62c95c12e38837b5ea25662d575bf5eae8aa3f8a8a079a151e34eb931a6 AS builder
+FROM caddy:2.8.0-builder@sha256:93a0320af6e247362974f8606f1659b977b8c4421282682844a197b26b4be924 AS builder
 
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
 
-FROM caddy:2.8.0@sha256:2f73fa2a8c6ca5020ab4f101ce6735e183be6176ab8df4ec4620aa5fbaebaf20
+FROM caddy:2.8.0@sha256:ccdad842a0f34a8db14fa0671113f9567d65ba3798220539467d235131a3ed63
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
