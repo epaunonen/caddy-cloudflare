@@ -21,7 +21,7 @@ jobs:
         run: echo $CURRENT_TAG
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@29df2a9f8c71c2dfe7db598180a0460355ec1c00
+        uses: docker/login-action@7ca345011ac4304463197fac0e56eab1bc7e6af0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
